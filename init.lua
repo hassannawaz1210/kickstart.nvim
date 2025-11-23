@@ -357,6 +357,20 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  {
+    'max397574/better-escape.nvim',
+    config = function()
+      require('better_escape').setup()
+    end,
+  },
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      local leap = require 'leap'
+      leap.add_default_mappings()
+      leap.opts.case_sensitive = true
+    end,
+  },
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -671,7 +685,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
