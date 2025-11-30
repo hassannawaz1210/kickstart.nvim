@@ -152,6 +152,17 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-------------------  my changes - start ---------------------
+-- fix the tab
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- move a line with ALT + J and ALT + K
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { silent = true, noremap = true })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true })
+-------------------  my changes - end ---------------------
+
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
 
@@ -371,7 +382,6 @@ require('lazy').setup({
       leap.opts.case_sensitive = true
     end,
   },
-
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -890,25 +900,48 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   opts = {
+  --     transparent = true,
+  --     styles = {
+  --       sidebars = 'transparent',
+  --       floats = 'transparent',
+  --     },
+  --   },
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('tokyonight').setup {
+  --       styles = {
+  --         comments = { italic = false }, -- Disable italics in comments
+  --       },
+  --     }
+  --
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --   end,
+  -- },
+  {
     'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+    priority = 1000,
+    opts = {
+      transparent = true,
+      styles = {
+        comments = { italic = false },
+        sidebars = 'transparent',
+        floats = 'transparent',
+      },
+    },
+    config = function(_, opts)
+      require('tokyonight').setup(opts)
+      vim.cmd 'colorscheme tokyonight-night'
     end,
   },
 
