@@ -161,6 +161,21 @@ vim.opt.expandtab = true
 -- move a line with ALT + J and ALT + K
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { silent = true, noremap = true })
 vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true })
+
+local options = { noremap = true }
+
+-- basic auto-pairs
+vim.keymap.set('i', '"', '""<Left>', options)
+vim.keymap.set('i', "'", "''<Left>", options)
+vim.keymap.set('i', '(', '()<Left>', options)
+vim.keymap.set('i', '[', '[]<Left>', options)
+vim.keymap.set('i', '{', '{}<Left>', options)
+
+-- auto-block on {<CR>
+vim.keymap.set('i', '{<CR>', '{<CR>}<Esc>O', options)
+
+-- auto-block with semicolon on {;<CR>
+vim.keymap.set('i', '{;<CR>', '{<CR>};<Esc>O', options)
 -------------------  my changes - end ---------------------
 
 -- Preview substitutions live, as you type!
