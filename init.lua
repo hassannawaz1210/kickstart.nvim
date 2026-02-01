@@ -162,6 +162,28 @@ vim.opt.expandtab = true
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { silent = true, noremap = true })
 vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true })
 
+-- put ; at the end of the line using CTRL+;
+vim.keymap.set({ 'n', 'i' }, '<Leader>;', function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+
+  -- Do nothing if line already ends with ;
+  if line:match ';%s*$' then
+    return
+  end
+
+  -- Trim trailing whitespace and add semicolon
+  line = line:gsub('%s*$', '') .. ';'
+  vim.api.nvim_set_current_line(line)
+
+  -- Restore cursor safely
+  local new_len = #line
+  if col > new_len then
+    col = new_len
+  end
+  vim.api.nvim_win_set_cursor(0, { row, col })
+end, { noremap = true, silent = true })
+
 local options = { noremap = true }
 
 -- basic auto-pairs
