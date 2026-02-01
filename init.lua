@@ -874,6 +874,20 @@ require('lazy').setup({
           -- },
         },
         opts = {},
+        config = function(_, opts)
+          require('luasnip').setup(opts)
+          -- Jump between snippet placeholders
+          vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+            if require('luasnip').jumpable(1) then
+              require('luasnip').jump(1)
+            end
+          end, { silent = true })
+          vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+            if require('luasnip').jumpable(-1) then
+              require('luasnip').jump(-1)
+            end
+          end, { silent = true })
+        end,
       },
       'folke/lazydev.nvim',
     },
