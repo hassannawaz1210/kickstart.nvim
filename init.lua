@@ -415,8 +415,14 @@ require('lazy').setup({
     'ggandor/leap.nvim',
     config = function()
       local leap = require 'leap'
-      leap.add_default_mappings()
       leap.opts.case_sensitive = true
+      -- zj for forward, zk for backward
+      vim.keymap.set({ 'n', 'x', 'o' }, 'zj', function()
+        leap.leap {}
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, 'zk', function()
+        leap.leap { backward = true }
+      end)
     end,
   },
   { -- Fuzzy Finder (files, lsp, etc)
